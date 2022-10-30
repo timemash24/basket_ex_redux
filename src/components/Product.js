@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { increment } from '../basketSlice';
+import { decrement, increment, removeAll } from '../basketSlice';
 
 function Product({ name }) {
   const product = {
@@ -10,18 +10,17 @@ function Product({ name }) {
   };
   const dispatch = useDispatch();
 
-  const count = useSelector((state) =>
-    state.basket.products?.map((product) => {
-      if (product.name === name) return product.quantity;
-      return null;
-    })
-  );
-
   return (
     <div>
-      {name}:{count}
+      {name}
       <button onClick={() => dispatch(increment(product))}>
         Add to basket
+      </button>
+      <button onClick={() => dispatch(decrement(product))}>
+        Remove from basket
+      </button>
+      <button onClick={() => dispatch(removeAll(product.name))}>
+        Remove all
       </button>
     </div>
   );
